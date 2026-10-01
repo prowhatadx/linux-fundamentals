@@ -205,208 +205,367 @@ cat filename
 * Generally, **Files** is termed for both Files & Folders
 
 
-# Day 1 — Linux Commands + Facts
+# Day 2 — Vim Fundamentals & Others
 
-## General Commands
+## Day 1 Revision
 
-| Purpose       | Command     |
-| ------------- | ----------- |
-| Root user     | `sudo su -` |
-| User Identity | `whoami`    |
-
----
-
-## Calendar & Date
-
-| Purpose                                  | Command           |
-| ---------------------------------------- | ----------------- |
-| Calendar (single month)                  | `cal` OR `cal -1` |
-| Calendar (previous, current, next month) | `cal -3`          |
-| Calendar (entire year)                   | `cal -y 2026`     |
-| Calendar (month of any year)             | `cal feb 2026`    |
-| Current Date & Time (UTC)                | `date`            |
+| Command | Empty | Non-Empty | Read | Multi Files at the Same Time |
+| ------- | ----- | --------- | ---- | ----------------------------- |
+| `touch` | ✓ | ✗ | ✗ | ✓ |
+| `cat`   | ✓ | ✓ | ✓ | ✗ |
+| `echo`  | ✓ | ✓ | ✗ | ✗ |
 
 ---
 
-## Create Empty Files
+# Vim Commands
+
+## Basic Commands
 
 ### Create File
 
 ```bash
-touch filename
+vim filename
 ```
 
-### Create Multiple Files
+### Save and Quit
 
-```bash
-touch f1 f2
+```vim
+:wq!
 ```
 
-### Create Multiple Files (Efficiently)
+- `w` means save
+- `q!` means quit
+
+### Read File
 
 ```bash
-touch file{1..5}
+vim filename
 ```
 
-### Create Multiple Files (Leaving One)
+### Quit Editor Without Saving
 
-```bash
-touch f{1..3} f{5..8}
+```vim
+:q!
 ```
 
-### Create File with Spaced Name
+### Give Numbering to Lines (Command Mode)
 
-```bash
-touch "file name"
+```vim
+:set number
 ```
 
 OR
 
-```bash
-touch file\name
+```vim
+:set nu
 ```
 
 ---
 
-## Non-Empty Files
+## Jumping Lines
 
-### Create File Using `cat`
+### Jump on Last Line (Command Mode)
 
-```bash
-cat > filename
+Press:
+
+```text
+Shift + G
 ```
 
-OR
+### Jump on First Line (Command Mode)
 
-```bash
-cat >> filename
+Press:
+
+```text
+GG
 ```
 
-### Overwrite Content in File
+### Jump on Custom Line (Command Mode)
 
-```bash
-cat > filename
+```vim
+:linenumber
 ```
 
-### Append Content in File
+Example:
 
-```bash
-cat >> filename
-```
-
-### Create File Using `echo`
-
-```bash
-echo " content of file " > filename
-```
-
-OR
-
-```bash
-echo " content of file " >> filename
-```
-
-### Overwrite Content in File
-
-```bash
-echo " content of file " > filename
-```
-
-### Append Content in File
-
-```bash
-echo " content of file " >> filename
+```vim
+:6
 ```
 
 ---
 
-## Delete File
+## Delete
 
-### Delete a File
+### Delete Cursor-Pointing Line (Command Mode)
 
-```bash
-rm filename
+Press:
+
+```text
+DD
 ```
 
-### Delete File Forcefully
+### Delete Cursor-Pointing Custom Lines
 
-```bash
-rm -f filename
+```text
+numberDD
 ```
 
-### Delete Multiple Files (Efficiently)
+Examples:
 
-```bash
-rm file{1..5}
+```text
+1dd
+2dd
 ```
 
-### Delete All Files in Directory
+### Delete Line Irrespective of Cursor
 
-```bash
-rm *
+```vim
+:linenumberD
 ```
 
----
+Examples:
 
-## Directory Commands
-
-### Make Directory (Folder)
-
-```bash
-mkdir foldername
+```vim
+:3d
+:2d
 ```
 
-### Delete Directory
+### Delete Custom Line Range Irrespective of Cursor
 
-```bash
-rm -r foldername
+```vim
+:linenumberstart,linenumberendD
 ```
 
-### Delete Directory Forcefully
+Examples:
 
-```bash
-rm -rf foldername
-```
-
-### Delete Multiple Directories
-
-```bash
-rm -r foldername{1..6}
+```vim
+:3,6d
+:2,9d
 ```
 
 ---
 
-## Extra Commands
+## Search & Replace
 
-### See All the Files
+### Search in Editor
 
-```bash
-ls
+```vim
+:/word
 ```
 
-> `ls` — listing
+Examples:
 
-### Read File Content
+```vim
+:/yoo
+:/e
+:/50
+```
 
-```bash
-cat filename
+### Search and Replace in Entire Editor
+
+```vim
+:%s/searchingword/replacingword
+```
+
+Example:
+
+```vim
+:%s/ankur/dome
+```
+
+- `%` means all lines
+- `s` means substitute
+
+### Search and Replace at Particular Line
+
+```vim
+:linenumberS/searchingword/replacingword
+```
+
+Example:
+
+```vim
+:4s/ankur/dome
+```
+
+### Search and Replace in Entire Editor (Globally)
+
+```vim
+:%s/searchingword/replacingword/g
+```
+
+Example:
+
+```vim
+:%s/ankur/dome/g
+```
+
+### Search and Replace at Particular Line (Globally)
+
+```vim
+:linenumberS/searchingword/replacingword/g
+```
+
+Example:
+
+```vim
+:4s/ankur/dome/g
 ```
 
 ---
 
-## Important Notes
+## Copy & Paste Lines (Yanking Method)
 
-1. `rm` means **remove**
-2. `r` means **recursive**
-3. `-r` is used to delete the subfiles in directory
-4. For `cat` command, enter values and then hit **Ctrl + D**
+### Copy One Line Pointing on Cursor
+
+Press:
+
+```text
+YY
+```
+
+### Copy Multiple Lines Pointing on Cursor
+
+```text
+numberYY
+```
+
+Example:
+
+```text
+2yy
+```
+
+### Paste One Line Below Pointing on Cursor
+
+Press:
+
+```text
+P
+```
+
+### Paste One Line Above Pointing on Cursor
+
+Press:
+
+```text
+Shift + P
+```
 
 ---
 
-## Facts
+# Two Modes
 
-* Linux is **GUI + CLI** *(Industry Standard: CLI)*
-* Linux is **case sensitive**
-* Linux is **space sensitive**
-* Folders are called **Directory**
-* Generally, **Files** is termed for both Files & Folders
+## Command Mode
+
+- Default mode
+- Only run commands
+- Press `Esc`
+
+## Insert Mode
+
+- Data insertion
+- Press `i`
+
+---
+
+## Flow
+
+```text
+Command Mode
+    ↓
+Press i
+    ↓
+Insert Mode
+    ↓
+Enter Data
+    ↓
+Esc Key
+    ↓
+:wq!
+    ↓
+Press Enter
+```
+
+---
+
+# Extra Notes & Examples
+
+- Number in Vim is temporary and need to run again.
+- If you want to delete 2nd line & 5d, use `:2d` and `:4d` due to shift in line numbering.
+- If you want to delete 13, 18 and 22 line, use `:13d`, `:17d`, `:20d`.
+- If thinking about cursor use `DD` and irrespective of cursor use `:numberD`.
+- `s%/ankur/dome` this will substitute only the first occurrence at each line. So, use `/g` after command to make it globally.
+
+---
+
+# Others
+
+## Cat Commands
+
+### Show Lines from Top
+
+```bash
+cat filename | head -numberoflines
+```
+
+Example:
+
+```bash
+cat file1 | head -3
+```
+
+### Show Lines from Bottom
+
+```bash
+cat filename | tail -numberoflines
+```
+
+Example:
+
+```bash
+cat file1 | tail -3
+```
+
+### Show Lines from Top (Efficient)
+
+```bash
+head -numberoflines filename
+```
+
+Example:
+
+```bash
+head -3 filename
+```
+
+### Show Lines from Bottom (Efficient)
+
+```bash
+tail -numberoflines filename
+```
+
+Example:
+
+```bash
+tail -3 filename
+```
+
+### Show Custom Lines In-Between
+
+```bash
+cat filename | head -numberoflines | tail -numberoflines
+```
+
+Example:
+
+```bash
+cat file1 | head -3 | tail -2
+```
+
+---
+
+## Extra Notes & Examples
+
+- If no parameter is passed, by default 10 lines are showed.
+- In the custom lines command, we first kinda filter the top lines and then sub-filter the lines using `tail` command.
