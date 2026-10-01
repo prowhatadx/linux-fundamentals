@@ -1,0 +1,364 @@
+# Day 2 — Vim Fundamentals & Others
+
+## Day 1 Revision
+
+| Command | Empty | Non-Empty | Read | Multi Files at the Same Time |
+| ------- | ----- | --------- | ---- | ----------------------------- |
+| `touch` | ✓ | ✗ | ✗ | ✓ |
+| `cat`   | ✓ | ✓ | ✓ | ✗ |
+| `echo`  | ✓ | ✓ | ✗ | ✗ |
+
+---
+
+# Vim Commands
+
+## Basic Commands
+
+### Create File
+
+```bash
+vim filename
+```
+
+### Save and Quit
+
+```vim
+:wq!
+```
+
+- `w` means save
+- `q!` means quit
+
+### Read File
+
+```bash
+vim filename
+```
+
+### Quit Editor Without Saving
+
+```vim
+:q!
+```
+
+### Give Numbering to Lines (Command Mode)
+
+```vim
+:set number
+```
+
+OR
+
+```vim
+:set nu
+```
+
+---
+
+## Jumping Lines
+
+### Jump on Last Line (Command Mode)
+
+Press:
+
+```text
+Shift + G
+```
+
+### Jump on First Line (Command Mode)
+
+Press:
+
+```text
+GG
+```
+
+### Jump on Custom Line (Command Mode)
+
+```vim
+:linenumber
+```
+
+Example:
+
+```vim
+:6
+```
+
+---
+
+## Delete
+
+### Delete Cursor-Pointing Line (Command Mode)
+
+Press:
+
+```text
+DD
+```
+
+### Delete Cursor-Pointing Custom Lines
+
+```text
+numberDD
+```
+
+Examples:
+
+```text
+1dd
+2dd
+```
+
+### Delete Line Irrespective of Cursor
+
+```vim
+:linenumberD
+```
+
+Examples:
+
+```vim
+:3d
+:2d
+```
+
+### Delete Custom Line Range Irrespective of Cursor
+
+```vim
+:linenumberstart,linenumberendD
+```
+
+Examples:
+
+```vim
+:3,6d
+:2,9d
+```
+
+---
+
+## Search & Replace
+
+### Search in Editor
+
+```vim
+:/word
+```
+
+Examples:
+
+```vim
+:/yoo
+:/e
+:/50
+```
+
+### Search and Replace in Entire Editor
+
+```vim
+:%s/searchingword/replacingword
+```
+
+Example:
+
+```vim
+:%s/ankur/dome
+```
+
+- `%` means all lines
+- `s` means substitute
+
+### Search and Replace at Particular Line
+
+```vim
+:linenumberS/searchingword/replacingword
+```
+
+Example:
+
+```vim
+:4s/ankur/dome
+```
+
+### Search and Replace in Entire Editor (Globally)
+
+```vim
+:%s/searchingword/replacingword/g
+```
+
+Example:
+
+```vim
+:%s/ankur/dome/g
+```
+
+### Search and Replace at Particular Line (Globally)
+
+```vim
+:linenumberS/searchingword/replacingword/g
+```
+
+Example:
+
+```vim
+:4s/ankur/dome/g
+```
+
+---
+
+## Copy & Paste Lines (Yanking Method)
+
+### Copy One Line Pointing on Cursor
+
+Press:
+
+```text
+YY
+```
+
+### Copy Multiple Lines Pointing on Cursor
+
+```text
+numberYY
+```
+
+Example:
+
+```text
+2yy
+```
+
+### Paste One Line Below Pointing on Cursor
+
+Press:
+
+```text
+P
+```
+
+### Paste One Line Above Pointing on Cursor
+
+Press:
+
+```text
+Shift + P
+```
+
+---
+
+# Two Modes
+
+## Command Mode
+
+- Default mode
+- Only run commands
+- Press `Esc`
+
+## Insert Mode
+
+- Data insertion
+- Press `i`
+
+---
+
+## Flow
+
+```text
+Command Mode
+    ↓
+Press i
+    ↓
+Insert Mode
+    ↓
+Enter Data
+    ↓
+Esc Key
+    ↓
+:wq!
+    ↓
+Press Enter
+```
+
+---
+
+# Extra Notes & Examples
+
+- Number in Vim is temporary and need to run again.
+- If you want to delete 2nd line & 5d, use `:2d` and `:4d` due to shift in line numbering.
+- If you want to delete 13, 18 and 22 line, use `:13d`, `:17d`, `:20d`.
+- If thinking about cursor use `DD` and irrespective of cursor use `:numberD`.
+- `s%/ankur/dome` this will substitute only the first occurrence at each line. So, use `/g` after command to make it globally.
+
+---
+
+# Others
+
+## Cat Commands
+
+### Show Lines from Top
+
+```bash
+cat filename | head -numberoflines
+```
+
+Example:
+
+```bash
+cat file1 | head -3
+```
+
+### Show Lines from Bottom
+
+```bash
+cat filename | tail -numberoflines
+```
+
+Example:
+
+```bash
+cat file1 | tail -3
+```
+
+### Show Lines from Top (Efficient)
+
+```bash
+head -numberoflines filename
+```
+
+Example:
+
+```bash
+head -3 filename
+```
+
+### Show Lines from Bottom (Efficient)
+
+```bash
+tail -numberoflines filename
+```
+
+Example:
+
+```bash
+tail -3 filename
+```
+
+### Show Custom Lines In-Between
+
+```bash
+cat filename | head -numberoflines | tail -numberoflines
+```
+
+Example:
+
+```bash
+cat file1 | head -3 | tail -2
+```
+
+---
+
+## Extra Notes & Examples
+
+- If no parameter is passed, by default 10 lines are showed.
+- In the custom lines command, we first kinda filter the top lines and then sub-filter the lines using `tail` command.
