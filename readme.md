@@ -569,3 +569,157 @@ cat file1 | head -3 | tail -2
 
 - If no parameter is passed, by default 10 lines are showed.
 - In the custom lines command, we first kinda filter the top lines and then sub-filter the lines using `tail` command.
+
+
+
+
+# Day 3 — Linux Fundamentals
+
+## Linux
+
+- Linux is operating system.
+- It was developed by Linus Torvalds in 1991.
+- Top Distros: Red Hat, CentOS, Ubuntu.
+
+---
+
+## Features / Advantages
+
+1. Open Source / Free of cost
+2. Supports both GUI and CLI
+3. Multi user operating system
+4. Multi tasking operating system
+5. More secure than Windows (user level permissions)
+
+---
+
+# Windows vs Linux
+
+| Windows | Linux |
+| ------- | ----- |
+| It is proprietary software of Microsoft | It is free of cost |
+| More GUI based comparatively | CLI is the primary method to interact |
+| Less secure but has products like Windows Defender | Linux is far superior when it comes to security |
+| It’s code comes under Copyright laws | It’s open source OS |
+
+---
+
+# Components of Linux
+
+## 1. Shell
+
+It’s an interface between user and kernel. It receives user commands and rectifies the commands, if correct then sent to kernel.
+
+## 2. Kernel
+
+It’s core of operating system. It’s a bridge between shell and hardware. It is responsible for executing the commands.
+
+---
+
+## Flow
+
+```text
+User → Shell → Kernel → Hardware
+```
+
+---
+
+# Types of Shell
+
+1. **Bourne Shell (`sh`)**: It was the very first shell.
+2. **Bash Shell (`bash`)**: It’s advance version of Bourne Shell. (Bash: Bourne Again Shell)
+3. **C shell (`csh`)**
+4. **TC Shell (`tcsh`)**: Advance version of C shell
+
+---
+
+# Commands
+
+### Check the Kernel Version
+
+```bash
+uname -r
+```
+
+### See Current Shell
+
+```bash
+echo $0
+```
+
+### See Default Linux Shell
+
+```bash
+echo $SHELL
+```
+
+### Get Info of Any Command
+
+```bash
+man command
+```
+
+Example:
+
+```bash
+man mkdir
+```
+
+### See IP Address of Linux Machine
+
+```bash
+ifconfig
+```
+
+OR
+
+```bash
+ip addr
+```
+
+OR
+
+```bash
+hostname -i
+```
+
+### See Hostname
+
+```bash
+hostname
+```
+
+### Change Hostname
+
+```bash
+hostname new name
+```
+
+AND
+
+```bash
+bash
+```
+
+---
+
+# Windows Commands
+
+### See IP Address
+
+```cmd
+ipconfig
+```
+
+### See Hostname
+
+```cmd
+hostname
+```
+
+---
+
+# Facts
+
+- Types of Kernel: Monolithic, Micro, Hybrid
+- Every Linux machine has IP address & hostname
