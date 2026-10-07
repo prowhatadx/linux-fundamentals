@@ -1,0 +1,137 @@
+# Day 4 — Linux File System Hierarchy
+
+## Linux File System
+
+- `/` (forward slash) is the top most directory in Linux, also known as root directory.
+- Prominent Sub Directories: `tmp`, `etc`, `bin`, `sbin`, `root`, `boot`, `home`, `proc`
+- Above directories are predefined & created.
+
+---
+
+# Commands
+
+## Change Directory
+
+### Absolute Path
+
+```bash
+cd absolute_path_to_dir
+```
+
+Example:
+
+```bash
+cd /home/dir1
+```
+
+### Relative Path
+
+```bash
+cd relative_path_of_dir
+```
+
+Examples:
+
+```bash
+cd ../../dir2_1
+cd dir2/dir3
+```
+
+---
+
+## Check Present Directory
+
+```bash
+pwd
+```
+
+---
+
+## List All Files/Folders in PWD
+
+```bash
+ls
+```
+
+---
+
+## List All Files/Folders of Any Directory
+
+```bash
+ls /directoryname
+```
+
+Example:
+
+```bash
+cd /etc
+```
+
+---
+
+## Make Nested Directories Before Their Parents Exist
+
+```bash
+mkdir -p /dir1/dir2/dir3/dir4
+```
+
+---
+
+## Create Multiple Files at Different Locations
+
+```text
+directoryname
+```
+
+---
+
+## Use Cases of `cd` Command
+
+| Command | Use Case |
+| ------- | -------- |
+| `cd ..` | 1 step back |
+| `cd ../..` | 2 steps back |
+| `cd .` | Useless command but IMP, goes in pwd |
+| `cd -` | Go in previous directory |
+
+---
+
+# Recursive Directories
+
+## Issue
+
+We need to create a directory inside a directory that doesn’t exist yet. Hence, gives error.
+
+## Solution
+
+Make use of `-p` (aka parent directory) for creating directories. This makes sure that the non-existing parents are created and preserved. Later, the sole required directory is created.
+
+## Command
+
+```bash
+mkdir -p /dir1/dir2/dir3/dir4
+```
+
+---
+
+# Facts
+
+- When EC2 instance is initialised, we are in `/root` direct.
+- Absolute path always starts with **forward slash**.
+- Irrespective where are you (pwd), using absolute path you can go anywhere.
+- `pwd` matters for the relative path.
+- Immediate upper level directory is termed as parent directory.
+- Immediate lower level directory is termed as child directory.
+- Relative path makes sense when traversal is between one/two levels only.
+
+---
+
+# Examples
+
+- See Figure 1 in screenshots.
+
+## Relative Path
+
+```bash
+cd ../../../tmp/dir11/dir12
+```
