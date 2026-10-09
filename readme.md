@@ -864,3 +864,220 @@ mkdir -p /dir1/dir2/dir3/dir4
 ```bash
 cd ../../../tmp/dir11/dir12
 ```
+
+
+
+
+# Day 5 — Yum + RPM Commands, Compression & Archiving
+
+## Yum and RPM
+
+- They are package management tools.
+- They’re used to install, update, and remove packages from repositories into your Linux machine.
+- `rpm`: Red Hat Package Management
+- `yum`: Yellowdog Updater Modified
+- **RPM doesn’t** resolve dependencies, but **YUM does** resolve dependencies.
+- Hence, YUM is the industry standard.
+
+**Structure**
+
+```text
+Linux Machine → Repositories → Package
+```
+
+---
+
+# RPM Commands
+
+## Install Package
+
+```bash
+rpm -ivh pkgname
+```
+
+- `i` means install
+- `v` means verbose (to show)
+- `h` means hash (provides a visual progress bar)
+
+## Update Package
+
+```bash
+rpm -Uvh pkgname
+```
+
+- `U` means update
+- `v` means verbose (to show)
+- `h` means hash (provides a visual progress bar)
+
+## Remove Package
+
+```bash
+rpm -ev pkgname
+```
+
+- `e` means erase/remove/delete
+- `v` means verbose (to show)
+
+---
+
+# YUM Commands
+
+## Install Package
+
+```bash
+yum install pkgname
+```
+
+## Update Package
+
+```bash
+yum update pkgname
+```
+
+## Remove Package
+
+```bash
+yum remove pkgname
+```
+
+## Install Packages Without Confirmation
+
+```bash
+yum install pkgname -y
+```
+
+## List All Packages in Repository
+
+```bash
+yum list
+```
+
+## See All Installed Packages in Linux Machine
+
+```bash
+yum list installed
+```
+
+## Check Whether a Particular Package Is Installed
+
+```bash
+yum list pkgname
+```
+
+- **Available** response: Present in the repository
+- **Installed** response: Installed in the Linux machine
+
+## Count All Packages in Repository
+
+```bash
+yum list | wc -l
+```
+
+## Count All Installed Packages in Linux Machine
+
+```bash
+yum list installed | wc -l
+```
+
+---
+
+# Compression of Files
+
+- Compression is done to reduce the size of files.
+- **Purpose:** Easy file sharing and disk space.
+
+## 1. `gzip` Command
+
+| Purpose | Command | Extension |
+| --- | --- | --- |
+| Compress | `gzip filename` | `.gz` |
+| Read | `zcat filename` | `.gz` |
+| Uncompress | `gunzip filename` | `.gz` |
+
+## 2. `bzip2` Command
+
+| Purpose | Command | Extension |
+| --- | --- | --- |
+| Compress | `bzip2 filename` | `.bz2` |
+| Read | `bzcat filename` | `.bz2` |
+| Uncompress | `bunzip2 filename` | `.bz2` |
+
+## 3. `xz` Command
+
+| Purpose | Command | Extension |
+| --- | --- | --- |
+| Compress | `xz filename` | `.xz` |
+| Read | `xzcat filename` | `.xz` |
+| Uncompress | `unxz filename` | `.xz` |
+
+## Facts
+
+- The maximum compression is acquired by either `bzip2` or `xz`.
+
+---
+
+# Archiving (Basic)
+
+- Archiving is used to store multiple files in a single file.
+
+## Create Archive File
+
+```bash
+tar -cvf newFileName existingF1 existingF2 existingF3
+```
+
+- `c` means create archive file
+- `v` means verbose (to show)
+- `f` means archive file
+
+## See Table Content of Archive File
+
+```bash
+tar -tvf archive_file_name
+```
+
+- `t` means table content
+- `v` means verbose (to show)
+- `f` means archive file
+
+## Extract File
+
+```bash
+tar -xvf archive_file_name
+```
+
+- `x` means extract
+- `v` means verbose (to show)
+- `f` means archive file
+
+## Facts
+
+- These files are contained in a single file but are not yet compressed.
+
+---
+
+# Others
+
+## See the File List with Size
+
+```bash
+ls -l
+```
+
+- `-l` means long
+- `ls` means listing
+
+## See the File List in Human-Readable Size (Non-Bytes Size)
+
+```bash
+ls -lh
+```
+
+- `-l` means long
+- `ls` means listing
+
+## Save Output of One Command in a File
+
+```bash
+man history > file
+```
