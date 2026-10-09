@@ -1081,3 +1081,242 @@ ls -lh
 ```bash
 man history > file
 ```
+
+
+
+# Day 6 — Archiving (Advanced) and Cron
+
+# Archiving
+
+## For Sending
+
+- In yesterday's notes, we only did archiving steps but never actually compressed it.
+- So we're supposed to do archiving, then compress it.
+
+Example:
+
+1. **Archive**
+
+   ```bash
+   tar -cvf file5.tar file1 file2 file3
+   ```
+
+2. **Compression**
+
+   ```bash
+   bzip2 file5
+   ```
+
+3. **Final File**: `file5.tar.bzip2`
+
+---
+
+## After Receiving
+
+Follow these steps to get the data:
+
+1. **Uncompress**
+
+   ```bash
+   bunzip2 file5
+   ```
+
+2. **Unarchiving**
+
+   ```bash
+   tar -xvf file5
+   ```
+
+---
+
+## Efficient Way
+
+Use the following parameters in the archiving command:
+
+| Compression | Parameter |
+| ----------- | --------- |
+| gzip        | `z`       |
+| bzip2       | `j`       |
+| xz          | `J`       |
+
+Commands:
+
+### gzip
+
+```bash
+tar -cvzf file5.tar file1 file2 file3
+```
+
+### bzip2
+
+```bash
+tar -cvzf file5.tar file1 file2 file3
+```
+
+### xz
+
+```bash
+tar -cvJf file5.tar file1 file2 file3
+```
+
+- **Final File**: `file5.tar`
+
+---
+
+## Conclusion
+
+1. **Archiving Without Compression**
+
+   ```bash
+   tar -cvf file5.tar file1 file2 file3
+   ```
+
+2. **Archiving With Compression**
+
+   ```bash
+   tar -cvzf file5.tar file1 file2 file3
+   ```
+
+---
+
+## Facts
+
+- We have used `.tar` while creating the zip file.
+- Also, when we run the efficient way, there won't be an exclusive file extension of compression.
+
+---
+
+# CRON / Crontab
+
+- It is done to perform a command/task at a particular time.
+
+## Fields of Crontab
+
+Keep the following order:
+
+| Field | Range / Values |
+| ----- | -------------- |
+| Minute | 0 to 59 |
+| Hour | 0 to 23 |
+| Date | 1 to 31 |
+| Month | 1 to 12 |
+| Day | 0/7 (Sun), 1 (Mon), 2 (Tue), 3 (Wed), 4 (Thu), 5 (Fri), 6 (Sat) |
+
+Example: Friday, October 9, 10:30 — `30 10 09 10 05`
+
+---
+
+## Configurations & Run
+
+**Package:** `cronie`
+
+### Config Commands
+
+- **Install**
+
+  ```bash
+  yum install -y cronie
+  ```
+
+- **Start Service**
+
+  ```bash
+  systemctl start crond
+  ```
+
+- **Persistent**
+
+  ```bash
+  systemctl enable crond
+  ```
+
+### Schedule a Job
+
+- **Command**
+
+  ```bash
+  crontab -e
+  ```
+
+- **Enter cron values**
+
+  ```cron
+  30 10 09 10 05 touch /file5
+  ```
+
+### See a Job
+
+```bash
+crontab -l
+```
+
+### Edit the Cron Job
+
+```bash
+crontab -e
+```
+
+### Remove a Scheduled Job
+
+```bash
+crontab -r
+```
+
+### Details About Cron Backend Files
+
+```bash
+cat /etc/crontab
+```
+
+---
+
+## Examples
+
+1. **One-time Job**
+
+   ```cron
+   36 10 20 10 03 touch /file5
+   ```
+
+2. **Daily Cron Job**
+
+   ```cron
+   36 10 * 10 * touch /file5
+   ```
+
+3. **Different Slots Cron Jobs**
+
+   ```cron
+   */2 10 * 10 * touch /file5
+   ```
+
+   Here, the job will run after every two minutes.
+
+4. **Repetitive Store Date in File**
+
+   ```cron
+   * * * * * date >> /root/file09
+   ```
+
+5. **Reboot Linux Machine**
+
+   ```cron
+   00 00 * * * reboot
+   ```
+
+6. **Cron Job at 12 AM & 12 PM Every Day, Month, Date**
+
+   ```cron
+   00 00,12 * * * command
+   ```
+
+---
+
+## Facts
+
+- Be as root user, the cron jobs won't run elsewise.
+- When `crontab -e` is executed, Vim editor is opened by default.
+- Once a timestamp is relapsed, you can't use past time in a cron job.
+- Resource: `crontab.guru`
+- All configuration files of Cron & Linux OS are stored in the `/etc` directory.
+- In Linux, restart is termed as reboot.
