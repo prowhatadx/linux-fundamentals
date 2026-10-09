@@ -183,6 +183,7 @@ tar -xvf archive_file_name
 ## Facts
 
 - These files are contained in a single file but are not yet compressed.
+- Try using .tar in the new file that you’ll make for different colour scheme 
 
 ---
 
