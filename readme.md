@@ -1320,3 +1320,125 @@ cat /etc/crontab
 - Resource: `crontab.guru`
 - All configuration files of Cron & Linux OS are stored in the `/etc` directory.
 - In Linux, restart is termed as reboot.
+
+
+
+# Day 7 — Hard Links, Soft Links, Grep & WC Commands
+
+## Hard Link File
+
+- **Hard Link File**: It is done to create a backup of a file. The backup file is interconnected, i.e., when changes are made in the original file or backup file, the changes are reflected in both files.
+- Both will have the **SAME** size, timestamps (creation, modified, etc.) and inode number (in the hard link case, it is the same).
+- Even if we delete the original file, the backup stays.
+- We can create hard links for files and not directories (to avoid main sub-directories duplication).
+
+---
+
+## Hard Link Commands
+
+| Purpose | Command |
+| --- | --- |
+| Create a hard link file | `ln filename hardlinkfilename` |
+| Check inode number | `ls -i` |
+| Check inode and file size | `ls -li` |
+
+Example:
+
+```bash
+ln /ankur /root/ankur.backup
+```
+
+---
+
+## Soft Link File
+
+- **Soft Link File**: It is also called a symbolic link / symlink. It is primarily used for making shortcuts of files that are deep inside nested directories, i.e., like a pointer. When changes are made in the original file or shortcut file, the changes are reflected in both files.
+- Both will have **DIFFERENT** sizes, timestamps (creation, modified, etc.) and inode numbers (in the hard link case, it is the same).
+- Even if we delete the original file, the shortcut stays but becomes useless.
+- We can create soft links for both files and directories.
+
+---
+
+## Soft Link Commands
+
+| Purpose | Command |
+| --- | --- |
+| Create a soft link file | `ln -s filename softlinkfilename` |
+| Check inode number | `ls -i` |
+| Check inode and file size | `ls -li` |
+
+Example:
+
+```bash
+ln -s /d1/d2/d3/ankur ankur.soft
+```
+
+---
+
+# WC Command
+
+- `wc` stands for word count. It is used to count words in a file. It counts lines, words and characters in a file. This includes spaces and symbols too.
+
+## WC Commands
+
+| Purpose | Command |
+| --- | --- |
+| Count lines, words and characters | `wc filename` |
+| See number of lines | `wc -l filename` |
+| See number of words | `wc -w filename` |
+| See number of characters | `we -c filename` |
+| Any combination | `we -lc filename` |
+| See characters in the longest line | `wc -L filename` |
+
+- The combination can be done in any format. The sequence decides what you’ll see first in the output.
+- The longest line is decided by the number of characters.
+
+---
+
+# Grep Command
+
+- It stands for globally search regular expression and print it.
+- It is used to search patterns/words in a file without actually opening it. This makes it different from the Vim command.
+- If the pattern exists, the line prints; no printing occurs if no result is found.
+
+## Grep Commands
+
+| Purpose | Command |
+| --- | --- |
+| Search a pattern in a file | `grep pattern filename` |
+| Search multiple files | `grep pattern filename1 filename2` |
+| Search multiple patterns | `grep -e pattern1 -e pattern2 filename` |
+| Print line number for grep output | `grep -n pattern filename` |
+| Print lines apart from the line containing the pattern | `grep -v pattern filename` |
+| Ignore case sensitivity and print matching lines | `grep -i pattern filename` |
+| Match the strict pattern, not as a sub-part of a word | `grep -w pattern filename` |
+| Print the pattern and not the entire line | `grep -o pattern filename` |
+| Print the matching line and the line after it | `grep -A 1 pattern filename` |
+| Print the matching line and the line before it | `grep -B 1 pattern filename` |
+| Print the matching line, the line before and the line after | `grep -C 1 1 pattern filename` |
+| Combination of before and after lines | `grep -B 1 -A 2 pattern filename` |
+
+### Examples
+
+```bash
+grep word ankur
+grep the ankur.txt dome.txt
+grep -e you -e the ankur.txt
+```
+
+---
+
+# Other Commands
+
+## Rename a File
+
+```bash
+mv currfilename new filename
+```
+
+---
+
+# Facts
+
+- There’s no recycle bin when using CLI in Linux.
+- Inode number is a unique number given to every file/folder in Linux. Hard link files make an exception here.
