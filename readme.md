@@ -1442,3 +1442,145 @@ mv currfilename new filename
 
 - There’s no recycle bin when using CLI in Linux.
 - Inode number is a unique number given to every file/folder in Linux. Hard link files make an exception here.
+
+
+
+# Day 8 — User Management - 1
+
+## User Management
+
+- It means managing of users.
+- It involves:
+  - Creation of user.
+  - Setting up passcode for user.
+  - Deletion of user.
+- Every new user gets a user ID (UID) and group ID (GID).
+
+---
+
+## Types of Users
+
+### 1. Root User (Admin/Super User)
+
+- The creator of the Linux machine.
+- UID: `0` and GID: `0`
+
+### 2. System Users (System Account)
+
+- This user is created when a package is installed. Like in the command (`yum install -y pkgname`), so `pkgname` user is created.
+- UID and GID range: `1` to `999`
+
+### 3. Normal Users
+
+- This includes the user you want to add in the system.
+- UID and GID range: `1000` to `60,000`
+
+---
+
+## Commands
+
+### Create Normal User
+
+```bash
+useradd username
+```
+
+### Check if User Exists
+
+```bash
+id username
+```
+
+### Set Password
+
+```bash
+passwd username
+```
+
+### Make Password Visible While Entering
+
+```bash
+echo "password" | passwd --stdin username
+```
+
+- `stdin` means standard output.
+
+### Delete a User
+
+- Only user deletion:
+
+```bash
+userdel username
+```
+
+- Both user deletion and user directory:
+
+```bash
+userdel -r username
+```
+
+### Switch User
+
+```bash
+su - username
+```
+
+- `su` means switch user.
+
+---
+
+## Fields of `/etc/passwd` File ⭐️
+
+### Root
+
+```text
+root:x:0:0:root:/root:/bin/bash
+```
+
+### Normal User (User-Defined)
+
+```text
+ankur:x:1001:1001::/home/ankur:/bin/bash
+```
+
+### EC2 User (Default)
+
+```text
+ec2-user:x:1000:1000:EC2 Default User:/home/ec2-user:/bin/bash
+```
+
+### Fields
+
+1. Username (`ankur`)
+2. Password of user denoted by X (`x`)
+3. UID (`1001`)
+4. GID (`1001`)
+5. Common name (not present, that’s why there are back-to-back colons `::`)
+6. Home directory of normal user (`/home/ankur`)
+7. Default shell of user
+
+---
+
+## Facts
+
+- When a user is created, a special directory is made for them. It will be present in the `/home` directory.
+- Irrespective of where you are, the user is properly created in Linux.
+- In an Amazon Linux machine, `ec2-user` is the first normal user and has UID and GID `1000`.
+- Multiple users can’t be created simultaneously like `useradd ankur dome`.
+- Entries of a new user are saved in `/etc/passwd` and `/etc/shadow`.
+- Creation of a user is required before setting up a password.
+- By default, while setting up a password, your password isn’t visible.
+- Home directory of the root user is `/root`. See Figure 2.
+
+### User Transition Password Requirement
+
+| User Transition | Password Required? |
+| --------------- | ------------------ |
+| Root → Normal User | No |
+| Normal User → Root | Yes |
+| Normal User → Normal User | Yes |
+
+- If a normal user wants to change their own password, they have to enter their own password, but not for root.
+- The users who has entry in /etc/sudoers file, he can perform all the operations in Linux.
+    - You can change it using vim /etc/sudoers
+    - Now, this sudoer user can perform all commands but has to use sudo before all commands.
