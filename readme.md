@@ -1584,3 +1584,66 @@ ec2-user:x:1000:1000:EC2 Default User:/home/ec2-user:/bin/bash
 - The users who has entry in /etc/sudoers file, he can perform all the operations in Linux.
     - You can change it using vim /etc/sudoers
     - Now, this sudoer user can perform all commands but has to use sudo before all commands.
+
+
+
+# Day 9 — User Management - 2
+
+## Sudo
+
+- `sudo` means super user do.
+- `sudo` has to be used before every command that a normal user with permissions in `/etc/sudoers`.
+- If you want to customise permission in `/etc/sudoers` for a user, use which yum command and paste in `/etc/sudoers`.
+  - We get a binary path: `/usr/bin/yum`. See Figure 3 to see the same.
+
+---
+
+# Fields of `/etc/shadow` File ⭐️
+
+## Normal User
+
+```text
+adx:!!:20741:0:99999:7:::
+```
+
+## Fields
+
+1. **Username:** `adx`
+2. **Password:** `!!` if not set, else encrypted format if set.
+3. **Last Password Change:** Date since 1 January 1970.
+4. **Password Change Restriction:** `m = 0` (0 means user can change password anytime; the number tells the days they have to wait before changing passcode).
+5. **Password Validity:** `M = 99999` (default 99999 means it expires after 99999 days, basically UNLIMITED).
+6. **Warning/Alert before Password Expires:** `W = 7` (default 7 alerts for 7 days before expiry).
+
+---
+
+# Commands
+
+| Purpose | Command | Example |
+| --- | --- | --- |
+| See password policy of user | `chage -l username` | — |
+| Update entire password policy | `chage username` | — |
+| Change minimum number of days between password changes | `chage -m daysNumber username` | `chage -m 5 adx` |
+| Change password validity | `chage -M daysNumber username` | `chage -M 30 adx` |
+| Change password warning | `chage -W daysNumber username` | `chage -W 3 adx` |
+
+---
+
+# Defaults (`/etc/default/useradd` File)
+
+- The defaults in this file are given to every new user.
+- The fields are:
+
+```text
+GROUP=100
+HOME=/home
+INACTIVE=-1
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes
+```
+
+- These fields can be changed using Vim commands.
+- The changes will apply to new users without updating existing users.
+- The default shell and home directory are `/bin/bash` and `/home`.
