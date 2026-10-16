@@ -1,0 +1,109 @@
+# Day 10 — User Management - 3
+
+## Important Commands
+
+---
+
+## UID Changes
+
+| Purpose | Command | Example |
+| --- | --- | --- |
+| Custom UID for new user | `useradd -u uid username` | `useradd -u 1432 dome` |
+| Custom UID for existing user | `usermod -u uid username` | `usermod -u 1430 dome` |
+
+---
+
+## Directory Changes
+
+| Purpose | Command | Example |
+| --- | --- | --- |
+| Custom home directory for new user | `usermod -d /etc/folder username` | `useradd -d /etc/ankur ankur` |
+| Create user without home directory | `useradd -M username` | — |
+
+---
+
+## Shell Changes
+
+| Purpose | Command | Example |
+| --- | --- | --- |
+| Custom shell for new user | `useradd -s /bin/csh username` | `useradd -s /bin/csh ankur` |
+| Custom shell for existing user | `usermod -s /bin/csh username` | `usermod -s /bin/csh ankur` |
+| Create user without shell | `useradd -s /sbin/nologin username` | `useradd -s /sbin/nologin ankur` |
+| Remove shell from existing user | `usermod -s /bin/csh username` | `usermod -s /bin/csh ankur` |
+
+---
+
+## Group Creation & Related Commands
+
+| Purpose | Command |
+| --- | --- |
+| Create group | `groupaad groupname` |
+| Delete group | `groupdel groupname` |
+| Create user and add to group simultaneously | `useradd -G groupname username` |
+| Add existing user to group | `usermod -G groupname username` |
+| Add user to multiple groups | `usermod -G groupname1,groupname2,groupname3 username` |
+| Add user to a new group while staying in existing groups | `usermod -aG groupname username` |
+| Check information of a group | `getent group groupname` |
+| Check user's group | `id username` OR `groups username` |
+
+- `aG` stands for all group.
+
+---
+
+## Gpasswd Command
+
+Only meant for existing users.
+
+| Purpose | Command |
+| --- | --- |
+| Add user to a group | `gpasswd -M username groupname` |
+| Add multiple users to a group | `gpasswd -M username1,username2, username3 groupname` |
+| Remove user from a group | `gpasswd -d username groupname` |
+
+---
+
+## User Creation Details
+
+### 1. User Created
+
+- Check: `id username`
+
+### 2. Home Directory
+
+- Check: `cat /home`
+- Then: `ls`
+
+### 3. Entries in List (First Field: Username)
+
+- passwd: `cat /etc/passwd`
+- shadow: `cat /etc/shadow`
+
+### 4. Primary Group (First Field: Group Name)
+
+- group: `cat /etc/group`
+- gshadow: `cat /etc/gshadow`
+
+---
+
+## Facts
+
+- A user can have multiple groups. These are the types of groups: Primary & Secondary.
+- Multiple users can't be deleted / created.
+
+### Usermod Drawbacks
+
+- Using the `usermod` command, a user can be added to multiple groups, but multiple users can't be added to a single group.
+- We can't remove a user from a group using the `usermod` command.
+- **Solution**: `glassed` command.
+
+### Remembering the Order of Username & Groupname in Commands
+
+- If the first command initial is `u`, then use username at last.
+- If the first command initial is `g`, then use groupname at last.
+
+### Other Notes
+
+- Apart from a user's primary group, groups can be deleted.
+- Groups can be added in `/etc/sudoers` to allow a pool of users permission (Figure 4).
+  - Just add `%` in front of the group name.
+- There's a default group in the sudoers file named **`wheel`**. `ec2-user` is a part of this since the machine was created.
