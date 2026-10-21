@@ -1,0 +1,112 @@
+# Day 11 — Permissions
+
+## Dissection of `ls -l`
+
+Let’s decode the meaning in Figure 5:
+
+1. **First field — File type**
+   - `-` : Normal file
+   - `l` : Soft link file
+   - `d` : Directory
+2. **Second field — Permissions**: `rw-r--r--`
+3. **Third field — Hard link count**
+   - `1` for files
+   - `2` for directories
+4. **Fourth field — Owner’s name** (example: `root`)
+5. **Fifth field — Group’s name**
+6. **Sixth field — Size in bytes**
+7. **Seventh field — Timestamp** when creation or updation happened
+8. **Eighth field — File/directory name**
+
+---
+
+## Permissions
+
+`rw-r--r--` represents the permissions shown by `ls -l`.
+
+- `rw-` — Owner permissions
+- `r--` — Group member permissions
+- `r--` — Others permissions
+  - Others are neither owners nor group members.
+
+**Important:** The default permission for any file is `644` (`rw-r--r--`).
+
+---
+
+## Types of Permissions
+
+| Permission | Value |
+| --- | ---: |
+| Read (`r`) | 4 |
+| Write (`w`) | 2 |
+| Execute (`x`) | 1 |
+| No permission (`-`) | 0 |
+
+### Examples
+
+- `rwx` = `7` because `4 + 2 + 1 = 7`
+- `rw-` = `6`
+- `r-x` = `5`
+- `---` = `0`
+- Check Figure 6 for more.
+
+---
+
+## Commands
+
+### Change Permission of a File
+
+```bash
+chmod permission filename
+```
+
+Example:
+
+```bash
+chmod 646 ankur.txt
+```
+
+### Change the Owner of a File
+
+```bash
+chown username filename
+```
+
+Example:
+
+```bash
+chown ankur /dome.txt
+```
+
+### Change the Group Name of a File
+
+```bash
+chgrp groupname filename
+```
+
+Example:
+
+```bash
+chgrp batch26 /dome.txt
+```
+
+### Change Owner and Group Name
+
+```bash
+chown username:groupname filename
+```
+
+Example:
+
+```bash
+chown ankur:batch26 /dome.txt
+```
+
+---
+
+## Facts
+
+- If you don’t want to give a certain permission, use `-` in its place.
+- If a user has `r` permission, they can read the file. `w` allows the user to write/edit the file. `x` allows the user to execute the file.
+- Most of the commands discussed below will be executed only by root.
+- Firstly, think of the user’s category (owner, group member, or others), then make changes to permissions.
