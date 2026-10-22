@@ -97,7 +97,7 @@ chgrp batch26 /dir1
 
 ## Example: Checking User Access
 
-To check whether a user can read, edit, or delete:
+To check whether a user can read, edit, or delete (See Figure 7):
 
 - **Read:** Check file permissions for `/dir1/file`.
 - **Edit:** Check file-level permissions.
