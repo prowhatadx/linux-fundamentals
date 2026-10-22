@@ -1783,7 +1783,7 @@ Let’s decode the meaning in Figure 5:
 
 ---
 
-## Permissions
+## Permissions (Files)
 
 `rw-r--r--` represents the permissions shown by `ls -l`.
 
