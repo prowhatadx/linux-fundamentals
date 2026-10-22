@@ -1873,3 +1873,192 @@ chown ankur:batch26 /dome.txt
 - If a user has `r` permission, they can read the file. `w` allows the user to write/edit the file. `x` allows the user to execute the file.
 - Most of the commands discussed below will be executed only by root.
 - Firstly, think of the user’s category (owner, group member, or others), then make changes to permissions.
+
+
+
+# Day 12 — Permissions - 2
+
+## Pre-requisite
+
+- To see details of items inside a directory:
+
+  ```bash
+  ls -l directoryname
+  ```
+
+- To see details of a directory rather than its contents:
+
+  ```bash
+  ls -ld directoryname
+  ```
+
+---
+
+## Permissions (Directories)
+
+**Important:** The default permission for any directory is `755` (`rwx r-x r-x`).
+
+### Types of Permissions
+
+1. **Read (`r`)**: User can read the directory.
+
+   ```bash
+   ls /dir1
+   ```
+
+2. **Write (`w`)**: User can delete or create items inside the directory.
+
+   ```bash
+   rm -rf /dir1/dir2
+   touch /dir1/file
+   mkdir /dir1/dir5
+   ```
+
+3. **Execute (`x`)**: User can enter the directory.
+
+   ```bash
+   cd /dir1
+   ```
+
+---
+
+## Commands
+
+### Change Folder Permissions
+
+```bash
+chmod permission directoryname
+```
+
+Example:
+
+```bash
+chmod 646 /dir1
+```
+
+### Change Folder Owner
+
+```bash
+chown username directoryname
+```
+
+Example:
+
+```bash
+chown ankur /dir1
+```
+
+### Change Folder Group
+
+```bash
+chgrp groupname directoryname
+```
+
+Example:
+
+```bash
+chgrp batch26 /dir1
+```
+
+---
+
+## Facts
+
+- If read access is removed from a directory, `ls -l directoryname` will not work, but `ls -ld directoryname` will work. The directory itself is present in the root directory and has read permissions there.
+- Default permission for a file: `644` (`rw-r--r--`).
+- Maximum permissions for a file: `666` (`rw-rw-rw-`).
+- Default permission for a directory: `755` (`rwxr-xr-x`).
+- Maximum permissions for a directory: `777` (`rwxrwxrwx`).
+- **Default permission = Maximum permission - umask number (`022`).**
+
+---
+
+## Example: Checking User Access
+
+To check whether a user can read, edit, or delete:
+
+- **Read:** Check file permissions for `/dir1/file`.
+- **Edit:** Check file-level permissions.
+- **Delete:** Check directory-level permissions.
+
+| Permission | Symbol | File | Folder / Directory |
+| --- | --- | --- | --- |
+| Read | `r = 4` | View content | List names of files |
+| Write | `w = 2` | Modify contents | Create, delete, rename entries |
+| Execute | `x = 1` | Run as a program/script | Enter or access files inside |
+| None | `- = 0` | No permission | No permission |
+
+---
+
+# Access Control List (ACL)
+
+- ACL is used when you want to customise particular permissions for a particular user who is in the others category. It is applied to a particular file.
+- When ACL is applied, a plus sign (`+`) appears when you run `ls -ld`.
+
+Example output:
+
+```text
+-rw-rwxr--+ 1 root root 0 Oct 22 09:35 /dir1/file
+```
+
+## ACL Commands
+
+### Apply User-Level Permission
+
+```bash
+setfacl -m u:username:permission filename
+```
+
+Example:
+
+```bash
+setfacl -m u:ankur:rwx /dir1/file
+```
+
+### Apply Group-Level Permission
+
+```bash
+setfacl -m g:groupname:permission filename
+```
+
+Example:
+
+```bash
+setfacl -m g:batch26:rwx /dir1/file
+```
+
+### Apply User-Level Permission to a Directory
+
+```bash
+setfacl -m u:username:permission foldername
+```
+
+Example:
+
+```bash
+setfacl -m u:ankur:rwx /dir1
+```
+
+### Get Users with ACL on a File
+
+```bash
+getfacl filename
+```
+
+Example:
+
+```bash
+getfacl /dir1/file
+```
+
+### Remove ACL for All Users from a File
+
+```bash
+setfacl -b filename
+```
+
+### Remove ACL for a Particular User
+
+```bash
+setfacl -x u:username filename
+```
