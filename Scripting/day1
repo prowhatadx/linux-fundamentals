@@ -1,0 +1,203 @@
+# Day 1 — Scripting - 1
+
+## Introduction to Scripting
+
+- Scripting was introduced to solve the drawbacks of Linux.
+- For example, making multiple users simultaneously isn’t possible using individual commands, so we can use scripting.
+- We’re learning Bash scripting / shell scripting.
+
+---
+
+## Process of Scripting
+
+### 1. File Creation
+
+Enter commands in the file and save.
+
+### 2. Do Listing and Seek Permissions
+
+This is to make sure that the file has executable permission for the required user.
+
+```bash
+chmod 744 /tmp/ankur
+```
+
+### 3. Enter Absolute Path for Execution
+
+```bash
+/tmp/ankur
+```
+
+---
+
+## Examples
+
+### 1. Create Script
+
+```bash
+#!/bin/bash
+
+mkdir /ankur
+
+touch /ankur/command
+
+useradd ankur
+
+echo "ankurdome" | passwd --stdin ankur
+
+yum install -y httpd
+```
+
+### 2. Removal Script
+
+```bash
+#!/bin/bash
+
+rm -rf /ankur
+rm -rf /ankur/command
+userdel ankur
+yum remove -y httpd
+```
+
+### 3. Create Multiple Users
+
+```bash
+#!/bin/bash
+
+for s in ankur dome adx
+do
+    useradd $s
+    id $s
+    echo "$s are created"
+done
+```
+
+### 4. Delete Multiple Users
+
+```bash
+#!/bin/bash
+
+for d in ankur dome adx
+do
+    userdel $d
+    id $d
+    echo "$d are deleted"
+done
+```
+
+---
+
+## Types of Operators
+
+1. **Assignment Operator:** `[ = ]`
+2. **Logical Operators:** `[ ]`
+   - AND (`-a`)
+   - OR (`-o`)
+   - NOT (`!`)
+3. **Arithmetic Operators:** `[ +, -, *, / ]`
+4. **Relational Operators:** `[ ]`
+   - Greater than (`-gt`)
+   - Less than (`-lt`)
+   - Equals to (`-eq`)
+   - Not equal to (`-ne`)
+   - Greater than or equal to (`-ge`)
+   - Less than or equal to (`-ne`)
+
+---
+
+## Arithmetic Operation Scripts
+
+### 1. Addition of Two Numbers
+
+```bash
+#!/bin/bash
+
+a=200
+b=50
+
+c=`expr $a + $b`
+
+echo "Addition is $c"
+```
+
+### 2. Multiplication of Two Numbers
+
+```bash
+#!/bin/bash
+
+a=200
+b=50
+
+c=`expr $a \* $b`
+
+echo "Multiplication is $c"
+```
+
+### 3. All Four Arithmetic Operations
+
+```bash
+#!/bin/bash
+
+a=200
+b=50
+
+echo "Addition is `expr $a + $b`"
+echo "Subtraction is `expr $a - $b`"
+echo "Multiplication is `expr $a \* $b`"
+echo "Division is `expr $a / $b`"
+```
+
+### Advanced Version
+
+```bash
+#!/bin/bash
+
+a=200
+b=50
+
+for op in + - \* /
+do
+    echo "answer is $(expr "$a" "$op" "$b")"
+done
+```
+
+### 4. Accept User Input
+
+```bash
+#!/bin/bash
+
+read -p "Enter 1st Number: " a
+read -p "Enter 2nd Number: " b
+
+echo "Addition is `expr $a + $b`"
+echo "Subtraction is `expr $a - $b`"
+echo "Multiplication is `expr $a \* $b`"
+echo "Division is `expr $a / $b`"
+```
+
+---
+
+## Facts
+
+- There are two types of files:
+  1. **Normal File:** Contains data.
+  2. **Script File:** Contains lines of executable code.
+- Another way to use the `chmod` command:
+
+  ```bash
+  chmod u+x /tmp/ankur
+  ```
+
+  - `u` stands for owner, `o` for others, and `g` for group.
+- `expr` in the operator examples stands for expression.
+- Spaces are needed between arithmetic operations but not in assignment operations.
+- Always give the file a `.sh` extension.
+- Always write the shebang on the very first line:
+
+  ```bash
+  #!/bin/bash
+  ```
+
+- Ways to create a shebang:
+  1. Write it inside the script.
+  2. Write it with the absolute path for execution: `#! /bin/bash tmp/ankur`
