@@ -1,0 +1,269 @@
+# Day 13 — Important Commands
+
+## Uniq Command
+
+**Command:** `uniq filename`
+
+- It is used to remove repeated consecutive lines.
+- Basically, it removes back-to-back occurring lines.
+- No alterations are made to the file; it only displays the output.
+- To save the output to a file:
+
+  ```bash
+  uniq filename1 > filename2
+  ```
+
+---
+
+## Sort Command
+
+**Command:** `sort filename`
+
+- It arranges lines according to the alphabetical order of the first letter in every line.
+- To sort in decreasing order:
+
+  ```bash
+  sort -r filename
+  ```
+
+- The original file is not changed. To save the output to another file:
+
+  ```bash
+  sort filename1 > filename2
+  ```
+
+- It is applicable to numerical values too.
+- Example:
+  - **Question:** `100, 50, 200, 10, 5`
+  - **Solution:** `10, 100, 200, 5, 50`
+  - This is because it only sees the first place of every line.
+- To sort numerically:
+
+  ```bash
+  sort -n filename
+  ```
+
+- To remove repeated lines too:
+
+  ```bash
+  sort -u filename
+  ```
+
+---
+
+## Find Command
+
+**Command:** `find / -name filenames`
+
+- It helps you find the exact absolute address of a file.
+- The forward slash searches the entire system.
+- To find something in a particular directory:
+
+  ```bash
+  find /directoryname -name filenames
+  ```
+
+### Find Files by Size
+
+- Find files larger than a given size:
+
+  ```bash
+  find / -size +5M
+  ```
+
+- Size units:
+  - Kilobytes (`k`)
+  - Megabytes (`M`)
+  - Gigabytes (`G`)
+  - Terabytes (`T`)
+- Find files smaller than a given size:
+
+  ```bash
+  find / -size -5M
+  ```
+
+- Find files between a given size range:
+
+  ```bash
+  find / -size +25M -size -30M
+  ```
+
+- Find only files with a certain size:
+
+  ```bash
+  find /directoryname -type f -size +25M
+  ```
+
+- Find only directories with a certain size:
+
+  ```bash
+  find /directoryname -type d -size +25M
+  ```
+
+### Find by Modification Time
+
+- Find files not accessed in the past 30 days (as written in the notes; `mtime` stands for modification time):
+
+  ```bash
+  find /directoryname -mtime +30
+  ```
+
+- Find directories:
+
+  ```bash
+  find /directoryname -type d -mtime +30
+  ```
+
+- Find files:
+
+  ```bash
+  find /directoryname -type f -mtime +30
+  ```
+
+- Remove unused files:
+
+  ```bash
+  find /directoryname -type f -mtime -30 -exec rm {} \;
+  ```
+
+---
+
+## Sed Command
+
+**Command:** `sed 's/word/replacingword/' filename`
+
+- `sed` searches and replaces, then displays the output without saving changes. By default, it replaces the first instance of the search term in each line.
+- To save changes to the file:
+
+  ```bash
+  sed -i 's/word/replacingword/' filename
+  ```
+
+- Replace globally:
+
+  ```bash
+  sed -i 's/word/replacingword/g' filename
+  ```
+
+- Replace on a certain line:
+
+  ```bash
+  sed -i '5s/word/replacingword/' filename
+  ```
+
+- Delete a certain line number:
+
+  ```bash
+  sed -i '2d' filename
+  ```
+
+- Delete multiple line numbers:
+
+  ```bash
+  sed -i '2d,5d' filename
+  ```
+
+- Delete empty lines:
+
+  ```bash
+  sed -i '/^$/d' filename
+  ```
+
+### Printing Lines with `sed`
+
+- Print a specific line:
+
+  ```bash
+  sed -n '2p' filename
+  ```
+
+- Print multiple lines:
+
+  ```bash
+  sed -n '2,5d' filename
+  ```
+
+- Print lines with a pattern:
+
+  ```bash
+  sed -n '/pattern/p' filename
+  ```
+
+- Print lines without the pattern:
+
+  ```bash
+  sed -n '/pattern/!p' filename
+  ```
+
+- Delete lines with a pattern:
+
+  ```bash
+  sed -i '/pattern/d' filename
+  ```
+
+### Insert Lines with `sed`
+
+- Insert a line above (before) a line:
+
+  ```bash
+  sed -i '2i line details' filename
+  ```
+
+- Insert a line below (after) a line: *(command not provided in the original notes)*
+
+---
+
+## Cut Command
+
+**Command:** `cut -d ":" -fcolumnNumber filename`
+
+Example:
+
+```bash
+cut -d ":" -f3 ankur.txt
+```
+
+- Here, `:` is the delimiter and `-f3` selects column 3.
+- Use this command when you want to see a certain column using a delimiter, also known as filtering columns.
+- To select multiple columns:
+
+  ```bash
+  cut -d ":" -f2,4 filename
+  ```
+
+---
+
+## Awk Command
+
+**Command:** `awk '{print $columnNumber}' filename`
+
+- It works the same as the `cut` command.
+- Print multiple columns:
+
+  ```bash
+  awk '{print $columnNumber1, $columnNumber2}' filename
+  ```
+
+- Print lines where a certain column contains a certain word:
+
+  ```bash
+  awk '$columnNumber=="word' filename
+  ```
+
+- Print lines with numerical conditions:
+
+  ```bash
+  awk '$columnNumber > 55000' filename
+  ```
+
+- Print all lines with numbering:
+
+  ```bash
+  awk '{print NR, $0}' filename
+  ```
+
+- Print the number of lines:
+
+  ```bash
+  awk 'END' filename
+  ```
