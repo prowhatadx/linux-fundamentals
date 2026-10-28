@@ -1,0 +1,107 @@
+# Day 2 — Scripting - 2
+
+## Types of Loops
+
+### 1. For Loop
+
+It contains `do` and `done` keywords. We write our code in between them.
+
+#### Example 1: Create Multiple Users
+
+```bash
+#! /bin/bash
+
+for s in ankur dome adx
+do
+    useradd $s
+    id $s
+    echo "$s are created"
+done
+```
+
+#### Example 2: Print Numbers Using a For Loop
+
+```bash
+#! /bin/bash
+
+for ((i=0;i<5;i++))
+do
+    echo "number is: $i"
+done
+```
+
+---
+
+### 2. While Loop
+
+- It includes the usage of relational operators.
+- You need spaces around the condition inside `[` and `]`.
+- It works till the given condition is true and breaks when a false occurrence happens.
+
+#### Example
+
+```bash
+#! /bin/bash
+
+n=1
+
+while [ $n -lt 10 ]
+do
+    echo "number is $n"
+    n=`expr $n + 1`
+done
+```
+
+---
+
+### 3. Until Loop
+
+- It’s almost like a while loop, but the difference is that it works when the given condition is not true.
+- The moment the condition becomes true, the loop stops.
+
+#### Example
+
+```bash
+#! /bin/bash
+
+n=5
+
+until [ $n -gt 10 ]
+do
+    echo "number is $n"
+    n=`expr $n + 1`
+done
+```
+
+**Output:** `5, 6, 7, 8, 9, 10`
+
+---
+
+## Variables
+
+### Types of Variables
+
+#### Local Variables
+
+- They’re **user-defined variables**.
+- They can be changed at the user end anytime.
+- They can be defined in multiple files with the same name, as they are restricted to local scope.
+- Examples:
+
+```bash
+a=20
+b=40
+c=`expr $a + $b`
+```
+
+#### Environment Variables
+
+- They’re **system-defined variables**.
+- They’re variables whose values don’t change.
+- Examples: `hostname`, `ifconfig`, `ip addr`
+
+---
+
+## Facts
+
+- If you want to print numbers in a certain range with a difference of 10: `{1..100..10}`
